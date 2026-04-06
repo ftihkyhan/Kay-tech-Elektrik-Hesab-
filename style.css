@@ -1,4 +1,5 @@
 :root {
+    color-scheme: dark;
     --bg-dark: #0d0d12;
     --bg-card: rgba(26, 27, 38, 0.6);
     --border-glass: rgba(255, 255, 255, 0.08);
