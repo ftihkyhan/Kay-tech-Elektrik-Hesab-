@@ -119,10 +119,8 @@ header {
 h1 {
     font-size: 1.8rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #fff, #a5b4fc);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #ffffff;
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.6), 0 0 5px rgba(99, 102, 241, 0.8);
 }
 
 .subtitle {
@@ -319,11 +317,8 @@ input[type="range"] {
 .highlight-number {
     font-size: 3.5rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #4ade80, #3b82f6);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+    text-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
 }
 
 .unit-large {
