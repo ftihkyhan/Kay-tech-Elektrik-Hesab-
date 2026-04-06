@@ -1,0 +1,580 @@
+:root {
+    --bg-dark: #0d0d12;
+    --bg-card: rgba(26, 27, 38, 0.6);
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --primary: #6366f1;
+    --primary-glow: rgba(99, 102, 241, 0.5);
+    --secondary: #a855f7;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --success: #10b981;
+    --danger: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Animation */
+.background-effects {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.glow-orb {
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    max-width: 500px;
+    max-height: 500px;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: float 10s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+    top: -10%; left: -10%;
+    background: radial-gradient(circle, var(--primary), transparent 70%);
+}
+
+.orb-2 {
+    bottom: -10%; right: -10%;
+    background: radial-gradient(circle, var(--secondary), transparent 70%);
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    color: var(--text-primary);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.logo-container {
+    text-align: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    margin-bottom: 0.25rem;
+}
+
+.logo svg {
+    filter: drop-shadow(0 0 8px var(--primary-glow));
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #a5b4fc);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Glassmorphism Card */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    border-radius: 24px;
+    padding: 1.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+}
+
+.row .input-group {
+    flex: 1;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+/* Segmented Control (Radio Tabs) */
+.segmented-control {
+    display: flex;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid var(--border-glass);
+}
+
+.segmented-control input {
+    display: none;
+}
+
+.segmented-control label {
+    flex: 1;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.segmented-control input:checked + label {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Input Fields */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+input[type="number"] {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.85rem;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+    border-color: var(--primary);
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.unit {
+    position: absolute;
+    right: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    pointer-events: none;
+}
+
+/* Slider */
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+input[type="range"] {
+    flex: 1;
+    accent-color: var(--primary);
+}
+
+.slider-val {
+    background: rgba(99, 102, 241, 0.2);
+    color: #a5b4fc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Button */
+.primary-btn {
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 10px 20px -10px var(--primary);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px -10px var(--primary);
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
+}
+
+/* Results Area */
+.hidden {
+    display: none !important;
+}
+
+.result-container {
+    text-align: center;
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-container h2 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.main-result {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.highlight-number {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #4ade80, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(74, 222, 128, 0.3);
+}
+
+.unit-large {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.result-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.detail-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Page Control */
+.page { display: none; }
+.page.active { 
+    display: block; 
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Sidebar Styling */
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0; left: -280px; width: 280px; height: 100%;
+    background: rgba(13, 13, 18, 0.95);
+    border-right: 1px solid var(--border-glass);
+    z-index: 100;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1rem;
+}
+
+.sidebar.active {
+    transform: translateX(280px);
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 1rem;
+}
+
+.sidebar-header h2 {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.sidebar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-item svg {
+    opacity: 0.7;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(168, 85, 247, 0.15));
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #fff;
+}
+
+.nav-item.active svg {
+    color: var(--primary);
+    opacity: 1;
+}
+
+/* RJ45 Diagram Styles */
+.rj45-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rj45-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.rj45-card.highlight-border {
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+}
+
+.rj45-card h3 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.wire-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.wire-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.wire-color {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.full-orange { background: #f97316; }
+.half-orange { background: repeating-linear-gradient(45deg, #f97316, #f97316 4px, #fff 4px, #fff 8px); }
+.full-green { background: #22c55e; }
+.half-green { background: repeating-linear-gradient(45deg, #22c55e, #22c55e 4px, #fff 4px, #fff 8px); }
+.full-blue { background: #3b82f6; }
+.half-blue { background: repeating-linear-gradient(45deg, #3b82f6, #3b82f6 4px, #fff 4px, #fff 8px); }
+.full-brown { background: #8b5cf6; } /* Adjusted to fit dark theme nicely, or real brown */
+.full-brown { background: #854d0e; }
+.half-brown { background: repeating-linear-gradient(45deg, #854d0e, #854d0e 4px, #fff 4px, #fff 8px); }
+
+/* Resistor Visualizer */
+.resistor-visual-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    margin-bottom: 1.5rem;
+}
+
+.resistor-body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 60px;
+}
+
+.resistor-wire {
+    height: 4px;
+    width: 40px;
+    background: #9ca3af;
+    position: absolute;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+.resistor-wire.left { left: -40px; }
+.resistor-wire.right { right: -40px; }
+
+.resistor-capsule {
+    width: 100%;
+    height: 100%;
+    background: #e7e5e4;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: inset 0 -10px 15px rgba(0,0,0,0.2), inset 0 5px 15px rgba(255,255,255,0.8), 0 5px 15px rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: relative;
+}
+
+.band {
+    width: 16px;
+    height: 100%;
+    background: transparent;
+    transition: background 0.3s;
+}
+
+.band-1 { margin-left: 10px; }
+.band-3 { margin-right: 20px; } /* gap before tolerance */
+
+.custom-select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 0.85rem;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+}
+.custom-select:focus {
+    border-color: var(--primary);
+}

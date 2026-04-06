@@ -1,0 +1,21 @@
+{
+    "name": "KayıTech",
+    "short_name": "KayıTech",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#0d0d12",
+    "theme_color": "#0d0d12",
+    "description": "Kablo Kesit ve Gerilim Düşümü Hesaplayıcı",
+    "icons": [
+        {
+            "src": "data:image/svg+xml;utf8,<svg width=\"192\" height=\"192\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"%236366f1\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2L3 14h9l-1 8 10-12h-9l1-8z\"/></svg>",
+            "type": "image/svg+xml",
+            "sizes": "192x192"
+        },
+        {
+            "src": "data:image/svg+xml;utf8,<svg width=\"512\" height=\"512\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"%236366f1\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2L3 14h9l-1 8 10-12h-9l1-8z\"/></svg>",
+            "type": "image/svg+xml",
+            "sizes": "512x512"
+        }
+    ]
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KayıTech - Elektrik Hesaplayıcı</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0d0d12">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Sidebar Menu -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menü</h2>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="nav-item active" data-target="page-kablo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Kablo Kesiti
+            </li>
+            <li class="nav-item" data-target="page-ek1">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+                RJ45 Renk Kodları
+            </li>
+            <li class="nav-item" data-target="page-ek2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v4M12 14v4M20 14v4M4 10h16v4H4z"></path></svg>
+                Direnç Renk Kodları
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="app-container">
+        <header>
+            <button class="menu-btn" id="menu-toggle" aria-label="Menüyü Aç">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <div class="logo-container">
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <h1>KayıTech</h1>
+                </div>
+                <p class="subtitle">Elektrik Hesaplayıcı</p>
+            </div>
+            <!-- Empty div to balance header flex -->
+            <div style="width: 24px;"></div>
+        </header>
+
+        <main>
+            <!-- PAGE: Kablo Kesit Hesabı -->
+            <div id="page-kablo" class="page active">
+                <div class="glass-card form-container">
+                    <form id="calculator-form">
+                        <!-- Faz Tipi -->
+                        <div class="input-group">
+                            <label>Faz Tipi</label>
+                            <div class="segmented-control">
+                                <input type="radio" id="f1" name="phase" value="1" checked>
+                                <label for="f1">Monofaze (220V)</label>
+                                <input type="radio" id="f3" name="phase" value="3">
+                                <label for="f3">Trifaze (380V)</label>
+                            </div>
+                        </div>
+
+                        <!-- İletken Tipi -->
+                        <div class="input-group">
+                            <label>İletken Malzeme</label>
+                            <div class="segmented-control">
+                                <input type="radio" id="cu" name="conductor" value="56" checked>
+                                <label for="cu">Bakır (Cu)</label>
+                                <input type="radio" id="al" name="conductor" value="35">
+                                <label for="al">Alüminyum (Al)</label>
+                            </div>
+                        </div>
+
+                        <!-- Yük ve Uzunluk -->
+                        <div class="row">
+                            <div class="input-group has-icon">
+                                <label for="power">Güç (P)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="power" name="power" placeholder="Örn: 5" step="0.01" required>
+                                    <span class="unit">kW</span>
+                                </div>
+                            </div>
+
+                            <div class="input-group has-icon">
+                                <label for="length">Hat Uzunluğu (L)</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="length" name="length" placeholder="Örn: 100" step="0.1" required>
+                                    <span class="unit">m</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- İzin Verilen Gerilim Düşümü -->
+                        <div class="input-group">
+                            <label>Maksimum Gerilim Düşümü (%e)</label>
+                            <div class="slider-container">
+                                <input type="range" id="vdrop-slider" name="vdrop-percentage" min="1" max="5" value="3" step="0.5">
+                                <span id="vdrop-val" class="slider-val">%3</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="primary-btn pulse-glow">
+                            <span>Sınırları Hesapla</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Sonuç Alanı -->
+                <div id="result-card" class="glass-card result-container hidden" style="margin-top: 1.5rem;">
+                    <h2>Önerilen Minimum Güvenli Kesit</h2>
+                    <div class="main-result">
+                        <span id="res-section" class="highlight-number">--</span>
+                        <span class="unit-large">mm²</span>
+                    </div>
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Çekilen Akım</span>
+                            <span id="res-current" class="detail-value">-- A</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Gerilim Düşümü (V)</span>
+                            <span id="res-vdrop" class="detail-value">-- V</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Gerilim Düşümü (%)</span>
+                            <span id="res-vdrop-perc" class="detail-value">-- %</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE: RJ45 Renk Kodları -->
+            <div id="page-ek1" class="page hidden">
+                <div class="glass-card">
+                    <h2>RJ45 Renk Kodları</h2>
+                    <p class="subtitle" style="margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                        Ethernet kablosu (Cat5/Cat6) çakarken kullanılan evrensel standartlar.
+                        Günümüzde ağ sistemlerinin %99'unda <strong>T568B</strong> standardı (Düz Bağlantı) kullanılmaktadır.
+                    </p>
+                    
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <img src="rj45_image.png" alt="RJ45 Soket" style="max-width: 100%; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1);">
+                    </div>
+
+                    <div class="rj45-container">
+                        <!-- T568B Card -->
+                        <div class="rj45-card highlight-border">
+                            <h3>T568B Standardı (En Yaygın)</h3>
+                            <div class="wire-grid">
+                                <div class="wire-item"><div class="wire-color half-orange"></div><span>1. Turuncu Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-orange"></div><span>2. Turuncu</span></div>
+                                <div class="wire-item"><div class="wire-color half-green"></div><span>3. Yeşil Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-blue"></div><span>4. Mavi</span></div>
+                                <div class="wire-item"><div class="wire-color half-blue"></div><span>5. Mavi Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-green"></div><span>6. Yeşil</span></div>
+                                <div class="wire-item"><div class="wire-color half-brown"></div><span>7. Kahve Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-brown"></div><span>8. Kahverengi</span></div>
+                            </div>
+                        </div>
+
+                        <!-- T568A Card -->
+                        <div class="rj45-card" style="margin-top:1rem;">
+                            <h3>T568A Standardı</h3>
+                            <div class="wire-grid">
+                                <div class="wire-item"><div class="wire-color half-green"></div><span>1. Yeşil Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-green"></div><span>2. Yeşil</span></div>
+                                <div class="wire-item"><div class="wire-color half-orange"></div><span>3. Turuncu Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-blue"></div><span>4. Mavi</span></div>
+                                <div class="wire-item"><div class="wire-color half-blue"></div><span>5. Mavi Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-orange"></div><span>6. Turuncu</span></div>
+                                <div class="wire-item"><div class="wire-color half-brown"></div><span>7. Kahve Beyaz</span></div>
+                                <div class="wire-item"><div class="wire-color full-brown"></div><span>8. Kahverengi</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE: Direnç Renk Kodları -->
+            <div id="page-ek2" class="page hidden">
+                <div class="glass-card">
+                    <h2>Direnç Renk Kodu Hesaplayıcı (4 Bant)</h2>
+                    
+                    <!-- Visual Resistor -->
+                    <div class="resistor-visual-container">
+                        <div class="resistor-body">
+                            <div class="resistor-wire left"></div>
+                            <div class="resistor-capsule">
+                                <div class="band band-1" id="vis-band1"></div>
+                                <div class="band band-2" id="vis-band2"></div>
+                                <div class="band band-3" id="vis-band3"></div>
+                                <div class="band band-4" id="vis-band4"></div>
+                            </div>
+                            <div class="resistor-wire right"></div>
+                        </div>
+                    </div>
+
+                    <!-- Selectors -->
+                    <form id="resistor-form">
+                        <div class="row">
+                            <div class="input-group">
+                                <label>1. Bant</label>
+                                <select id="sel-band1" class="custom-select">
+                                    <option value="0" data-color="#000000" style="background:#000000;color:#fff;">Siyah (0)</option>
+                                    <option value="1" data-color="#8B4513" style="background:#8B4513;color:#fff;" selected>Kahverengi (1)</option>
+                                    <option value="2" data-color="#FF0000" style="background:#FF0000;color:#fff;">Kırmızı (2)</option>
+                                    <option value="3" data-color="#FFA500" style="background:#FFA500;color:#000;">Turuncu (3)</option>
+                                    <option value="4" data-color="#FFFF00" style="background:#FFFF00;color:#000;">Sarı (4)</option>
+                                    <option value="5" data-color="#008000" style="background:#008000;color:#fff;">Yeşil (5)</option>
+                                    <option value="6" data-color="#0000FF" style="background:#0000FF;color:#fff;">Mavi (6)</option>
+                                    <option value="7" data-color="#800080" style="background:#800080;color:#fff;">Mor (7)</option>
+                                    <option value="8" data-color="#808080" style="background:#808080;color:#fff;">Gri (8)</option>
+                                    <option value="9" data-color="#FFFFFF" style="background:#FFFFFF;color:#000;">Beyaz (9)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>2. Bant</label>
+                                <select id="sel-band2" class="custom-select">
+                                    <option value="0" data-color="#000000" style="background:#000000;color:#fff;" selected>Siyah (0)</option>
+                                    <option value="1" data-color="#8B4513" style="background:#8B4513;color:#fff;">Kahverengi (1)</option>
+                                    <option value="2" data-color="#FF0000" style="background:#FF0000;color:#fff;">Kırmızı (2)</option>
+                                    <option value="3" data-color="#FFA500" style="background:#FFA500;color:#000;">Turuncu (3)</option>
+                                    <option value="4" data-color="#FFFF00" style="background:#FFFF00;color:#000;">Sarı (4)</option>
+                                    <option value="5" data-color="#008000" style="background:#008000;color:#fff;">Yeşil (5)</option>
+                                    <option value="6" data-color="#0000FF" style="background:#0000FF;color:#fff;">Mavi (6)</option>
+                                    <option value="7" data-color="#800080" style="background:#800080;color:#fff;">Mor (7)</option>
+                                    <option value="8" data-color="#808080" style="background:#808080;color:#fff;">Gri (8)</option>
+                                    <option value="9" data-color="#FFFFFF" style="background:#FFFFFF;color:#000;">Beyaz (9)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 1rem;">
+                            <div class="input-group">
+                                <label>Çarpan</label>
+                                <select id="sel-band3" class="custom-select">
+                                    <option value="1" data-color="#000000" style="background:#000000;color:#fff;">Siyah (x1)</option>
+                                    <option value="10" data-color="#8B4513" style="background:#8B4513;color:#fff;">Kahverengi (x10)</option>
+                                    <option value="100" data-color="#FF0000" style="background:#FF0000;color:#fff;" selected>Kırmızı (x100)</option>
+                                    <option value="1000" data-color="#FFA500" style="background:#FFA500;color:#000;">Turuncu (x1k)</option>
+                                    <option value="10000" data-color="#FFFF00" style="background:#FFFF00;color:#000;">Sarı (x10k)</option>
+                                    <option value="100000" data-color="#008000" style="background:#008000;color:#fff;">Yeşil (x100k)</option>
+                                    <option value="1000000" data-color="#0000FF" style="background:#0000FF;color:#fff;">Mavi (x1M)</option>
+                                    <option value="0.1" data-color="#FFD700" style="background:#FFD700;color:#000;">Altın (x0.1)</option>
+                                    <option value="0.01" data-color="#C0C0C0" style="background:#C0C0C0;color:#000;">Gümüş (x0.01)</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Tolerans</label>
+                                <select id="sel-band4" class="custom-select">
+                                    <option value="1" data-color="#8B4513" style="background:#8B4513;color:#fff;">Kahverengi (±1%)</option>
+                                    <option value="2" data-color="#FF0000" style="background:#FF0000;color:#fff;">Kırmızı (±2%)</option>
+                                    <option value="0.5" data-color="#008000" style="background:#008000;color:#fff;">Yeşil (±0.5%)</option>
+                                    <option value="5" data-color="#FFD700" style="background:#FFD700;color:#000;" selected>Altın (±5%)</option>
+                                    <option value="10" data-color="#C0C0C0" style="background:#C0C0C0;color:#000;">Gümüş (±10%)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="main-result" style="margin-top: 2.5rem; border-color: rgba(255,255,255,0.1);">
+                        <span id="resistor-result" class="highlight-number" style="font-size: 3rem;">1k</span>
+                        <span class="unit-large">Ω</span>
+                    </div>
+                    <div style="text-align:center; color: var(--text-secondary); font-weight:600; font-size:1.1rem; margin-top:-0.5rem;">
+                        Tolerans: <span id="resistor-tol" style="color:#fff;">±5%</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
